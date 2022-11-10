@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+	//guardar referência nesse atributo mainScene
 	private static Scene mainScene;
 
 	@Override
@@ -32,6 +33,7 @@ public class Main extends Application {
 		}
 	}
 
+	//método aqui para pegar referência Scene
 	public static Scene getMainScene() {
 		return mainScene;
 	}
