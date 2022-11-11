@@ -1,10 +1,9 @@
 package gui;
 
-
 import java.io.IOException;
-import java.lang.ref.Cleaner;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 import application.Main;
 import gui.util.Alerts;
@@ -17,6 +16,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import model.services.DepartmentService;
 
 public class MainViewController implements Initializable{
 	
@@ -38,13 +38,16 @@ public class MainViewController implements Initializable{
 	@FXML
 	public void onMenuItemDepartmentAction() {
 		//System.out.println("onMenuItemSellerAction");
-		loadView("/gui/DepartmentList.fxml");
+		loadView("/gui/DepartmentList.fxml", (DepartmentListController controller) -> {
+			controller.setDepartmentService(new DepartmentService());  //ação de inicialização do controller departamento
+			controller.updeteTableView();
+		});
 	}
 
 	@FXML
 	public void onMenuItemAboutAction() {
 		//System.out.println("onMenuItemSellerAction");
-		loadView("/gui/About.fxml");
+		loadView("/gui/About.fxml", x -> {});
 	}
 
 
@@ -61,29 +64,29 @@ public class MainViewController implements Initializable{
 	 * ->porque eu vou passar o caminho completo
 	 * @param absoluteName
 	 */
-	private void loadView(String absoluteName) {
+	private synchronized <T>void loadView(String absoluteName, Consumer<T> initializengAction) {
 		try {
 			//carregar uma tela
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			VBox newVBox = loader.load();
 			
 			
-			Scene mainScene = Main.getMainScene(); //para que eu tenha condição de trabalhar com a janela principal eu vou ter que pegar uma referência da cena a cena em que a janela principal está ela foi declarada na classe main
-			
+			//para que eu tenha condição de trabalhar com a janela principal eu vou 
+			//ter que pegar uma referência da cena a cena em que a janela principal está ela foi declarada na classe main
+			Scene mainScene = Main.getMainScene();
 			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent(); //referencia do VBOX da janela principal
 			
 			Node mainMenu = mainVBox.getChildren().get(0);//guardar uma referência para o menu
-			
 			mainVBox.getChildren().clear(); //limpar todos os filhos limpar mainVBox
-			
 			mainVBox.getChildren().add(mainMenu);
 			mainVBox.getChildren().addAll(newVBox.getChildren());
 			
+			T controller = loader.getController();
+			initializengAction.accept(controller);
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			Alerts.showAlert("IO Exeception", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
 	}
-	
 }
