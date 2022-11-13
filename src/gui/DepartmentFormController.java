@@ -30,6 +30,7 @@ public class DepartmentFormController implements Initializable {
 	private DepartmentService service;
 
 	private List<DataChangeListener> dataChangeListener = new ArrayList<>();
+	
 
 	@FXML
 	private TextField txtId;
