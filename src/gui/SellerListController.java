@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +17,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -24,6 +27,8 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Seller;
 import model.services.SellerService;
@@ -108,32 +113,32 @@ public class SellerListController implements Initializable, DataChangeListener {
 	}
 
 	private void createDialogForm(Seller obj, String absoluteName, Stage parentStage) {
-//		try {
-//			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName)); // Abrir janela de formulario
-//			Pane pane = loader.load(); // carregar view
-//
-//			SellerFormController controller = loader.getController();
-//			controller.setSeller(obj);
-//			controller.setSellerService(new SellerService());
-//			controller.subscribeDataChangeListener(this);
-//			controller.updateFormData();
-//
-//			/**
-//			 * quando carregar uma janela de diálogo modal na frente da janela existente e
-//			 * necessario que instancia um novo stage
-//			 */
-//			Stage dialogStage = new Stage();
-//			dialogStage.setTitle("Enter Seller data"); // configurar o título da janela
-//			dialogStage.setScene(new Scene(pane));// nova cena
-//			dialogStage.setResizable(false); // diz se janela pode ou não ser redimencionada
-//			dialogStage.initOwner(parentStage);
-//			dialogStage.initModality(Modality.WINDOW_MODAL);// a janela vai ficar travada enquanto você não fechar não
-//															// pode acessar a janela anterior
-//			dialogStage.showAndWait();// carregar a janela do formulário
-//
-//		} catch (IOException e) {
-//			Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
-//		}
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName)); // Abrir janela de formulario
+			Pane pane = loader.load(); // carregar view
+
+			SellerFormController controller = loader.getController();
+			controller.setSeller(obj);
+			controller.setSellerService(new SellerService());
+			controller.subscribeDataChangeListener(this);
+			controller.updateFormData();
+
+			/**
+			 * quando carregar uma janela de diálogo modal na frente da janela existente e
+			 * necessario que instancia um novo stage
+			 */
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Enter Seller data"); // configurar o título da janela
+			dialogStage.setScene(new Scene(pane));// nova cena
+			dialogStage.setResizable(false); // diz se janela pode ou não ser redimencionada
+			dialogStage.initOwner(parentStage);
+			dialogStage.initModality(Modality.WINDOW_MODAL);// a janela vai ficar travada enquanto você não fechar não
+															// pode acessar a janela anterior
+			dialogStage.showAndWait();// carregar a janela do formulário
+
+		} catch (IOException e) {
+			Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
+		}
 	}
 
 	private void initEditButtons() {
