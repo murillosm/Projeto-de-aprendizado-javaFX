@@ -112,7 +112,7 @@ public class DepartmentFormController implements Initializable {
 	}
 
 	@FXML
-	protected void onBtCancelAction(ActionEvent event) {
+	public void onBtCancelAction(ActionEvent event) {
 		Utils.currentStage(event).close();
 	}
 

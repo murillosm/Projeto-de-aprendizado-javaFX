@@ -51,7 +51,7 @@ public class SellerListController implements Initializable, DataChangeListener {
 	private TableColumn<Seller, String> tableColumnEmail;
 
 	@FXML
-	private TableColumn<Seller, Date> tableColumnBirtDate;
+	private TableColumn<Seller, Date> tableColumnBirthDate;
 	
 	@FXML
 	private TableColumn<Seller, Double> tableColumnBaseSalary;
@@ -69,9 +69,9 @@ public class SellerListController implements Initializable, DataChangeListener {
 
 	@FXML
 	public void onBtNewAction(ActionEvent event) {
-		Stage parantStage = Utils.currentStage(event);
+		Stage parentStage = Utils.currentStage(event);
 		Seller obj = new Seller();
-		createDialogForm(obj, "/gui/SellerForm.fxml", parantStage);
+		createDialogForm(obj, "/gui/SellerForm.fxml", parentStage);
 	}
 
 	public void setSellerService(SellerService service) {
@@ -80,16 +80,16 @@ public class SellerListController implements Initializable, DataChangeListener {
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		initializeNode();
+		initializeNodes();
 
 	}
 
-	private void initializeNode() {
+	private void initializeNodes() {
 		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("idSeller")); // iniciar apropriadamente o comportamento das colunas da tabela
 		tableColumnName.setCellValueFactory(new PropertyValueFactory<>("nameSeller"));
 		tableColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-		tableColumnBirtDate.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
-		Utils.formatTableColumnDate(tableColumnBirtDate, "dd/MM/yyyy");
+		tableColumnBirthDate.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
+		Utils.formatTableColumnDate(tableColumnBirthDate, "dd/MM/yyyy");
 		tableColumnBaseSalary.setCellValueFactory(new PropertyValueFactory<>("baseSalary"));
 		Utils.formatTableColumnDouble(tableColumnBaseSalary, 2);
 
@@ -100,7 +100,7 @@ public class SellerListController implements Initializable, DataChangeListener {
 
 	}
 
-	public void updeteTableView() {
+	public void updateTableView() {
 		if (service == null) {
 			throw new IllegalStateException("Service was null");
 		}
@@ -182,7 +182,7 @@ public class SellerListController implements Initializable, DataChangeListener {
 	}
 
 	private void removeEntity(Seller obj) {
-		Optional<ButtonType> result = Alerts.showConfirmation("Confirmation", "Are you sure to delete? ");
+		Optional<ButtonType> result = Alerts.showConfirmation("Confirmation", "Are you sure to delete?");
 		
 		if (result.get() == ButtonType.OK) {
 			if (service == null) {
@@ -190,7 +190,7 @@ public class SellerListController implements Initializable, DataChangeListener {
 			}
 			try {
 				service.remove(obj);
-				updeteTableView();
+				updateTableView();
 			} catch (DbIntegrityException e) {
 				Alerts.showAlert("Error removing object",  null, e.getMessage(), AlertType.ERROR);
 			}
@@ -200,7 +200,7 @@ public class SellerListController implements Initializable, DataChangeListener {
 
 	@Override
 	public void onDataChanged() {
-		updeteTableView();
+		updateTableView();
 	}
 
 }
