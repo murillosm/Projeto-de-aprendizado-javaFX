@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Seller {
     private Integer idSeller;
-    private String name;
+    private String nameSeller;
     private String email;
     private Date birthDate;
     private double baseSalary;
@@ -15,9 +15,9 @@ public class Seller {
     /***************** Constructor *******************/
     public Seller() {
     }
-    public Seller(Integer idSeller, String name, String email, Date birthDate, double baseSalary, Department department) {
+    public Seller(Integer idSeller, String nameSeller, String email, Date birthDate, double baseSalary, Department department) {
         this.idSeller = idSeller;
-        this.name = name;
+        this.nameSeller = nameSeller;
         this.email = email;
         this.birthDate = birthDate;
         this.baseSalary = baseSalary;
@@ -33,12 +33,12 @@ public class Seller {
         this.idSeller = idSeller;
     }
 
-    public String getName() {
-        return name;
+    public String getNameSeller() {
+        return nameSeller;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNameSeller(String nameSeller) {
+        this.nameSeller = nameSeller;
     }
 
     public String getEmail() {
@@ -90,7 +90,7 @@ public class Seller {
     public String toString() {
         return "Seller{" +
                "idSeller = " + idSeller +
-               ", name = '" + name + '\'' +
+               ", nameSeller = '" + nameSeller + '\'' +
                ", email = '" + email + '\'' +
                ", birthDate = " + birthDate +
                ", baseSalary = " + baseSalary +

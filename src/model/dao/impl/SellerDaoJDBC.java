@@ -37,7 +37,7 @@ public class SellerDaoJDBC implements SellerDao {
                     + "(?, ?, ?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS); //retornar o id do novo vendedor inserido.
 
-            pst.setString(1, obj.getName());
+            pst.setString(1, obj.getNameSeller());
             pst.setString(2, obj.getEmail());
             pst.setDate(3, new java.sql.Date(obj.getBirthDate().getTime()));
             pst.setDouble(4, obj.getBaseSalary());
@@ -74,7 +74,7 @@ public class SellerDaoJDBC implements SellerDao {
                                         + "SET Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ? "
                                         + "WHERE Id = ?");
 
-            pst.setString(1, obj.getName());
+            pst.setString(1, obj.getNameSeller());
             pst.setString(2, obj.getEmail());
             pst.setDate(3, new java.sql.Date(obj.getBirthDate().getTime()));
             pst.setDouble(4, obj.getBaseSalary());
@@ -142,7 +142,7 @@ public class SellerDaoJDBC implements SellerDao {
     private Seller instantiateSeller(ResultSet rs, Department dep) throws SQLException {
         Seller obj = new Seller();
         obj.setIdSeller(rs.getInt("Id"));
-        obj.setName(rs.getString("Name"));
+        obj.setNameSeller(rs.getString("Name"));
         obj.setEmail(rs.getString("Email"));
         obj.setBaseSalary(rs.getDouble("BaseSalary"));
         obj.setBirthDate(rs.getDate("BirthDate"));
